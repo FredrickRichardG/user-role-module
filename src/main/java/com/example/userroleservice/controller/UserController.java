@@ -1,6 +1,7 @@
 package com.example.userroleservice.controller;
 
 import com.example.userroleservice.dto.CreateUserRequest;
+import com.example.userroleservice.dto.RoleDto;
 import com.example.userroleservice.dto.UserDto;
 import com.example.userroleservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,12 @@ public class UserController {
     @Operation(summary = "Create a new user")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest request) {
         return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
+    }
+
+    @PostMapping("roles")
+    @Operation(summary = "Create a new role")
+    public ResponseEntity<RoleDto> createRole(@Valid @RequestBody RoleDto request) {
+        return new ResponseEntity<>(userService.createRole(request), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

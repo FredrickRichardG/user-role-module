@@ -1,9 +1,11 @@
 package com.example.userroleservice.service.impl;
 
 import com.example.userroleservice.dto.CreateUserRequest;
+import com.example.userroleservice.dto.RoleDto;
 import com.example.userroleservice.dto.UserDto;
 import com.example.userroleservice.entity.User;
 import com.example.userroleservice.entity.Role;
+import com.example.userroleservice.mapper.RoleMapper;
 import com.example.userroleservice.mapper.UserMapper;
 import com.example.userroleservice.repository.UserRepository;
 import com.example.userroleservice.repository.RoleRepository;
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
     private final PasswordEncoder passwordEncoder;
 
     @CachePut(value="USER_CACHE",key = "#result.id")
@@ -50,6 +53,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return userMapper.toDto(userRepository.save(user));
+    }
+
+    @CachePut(value="ROLE_CACHE",key = "#result.id")
+    public RoleDto createRole(RoleDto request) {
+        if (roleRepository.existsByName(request.getName())) {
+            throw new IllegalArgumentException("Role already exists");
+        }
+        Role role = roleMapper.toEntity(request);
+        return roleMapper.toDto(roleRepository.save(role));
     }
 
     @Cacheable(value="USER_CACHE",key = "#id")
