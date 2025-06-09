@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-06T11:29:45+0530",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
+    date = "2025-06-09T16:56:46+0530",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.7 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -30,13 +30,13 @@ public class UserMapperImpl implements UserMapper {
 
         UserDto userDto = new UserDto();
 
-        userDto.setActive( user.isActive() );
+        userDto.setId( user.getId() );
+        userDto.setUsername( user.getUsername() );
         userDto.setEmail( user.getEmail() );
         userDto.setFirstName( user.getFirstName() );
-        userDto.setId( user.getId() );
         userDto.setLastName( user.getLastName() );
+        userDto.setActive( user.isActive() );
         userDto.setRoles( roleSetToRoleDtoSet( user.getRoles() ) );
-        userDto.setUsername( user.getUsername() );
 
         return userDto;
     }
@@ -49,11 +49,11 @@ public class UserMapperImpl implements UserMapper {
 
         User user = new User();
 
+        user.setUsername( createUserRequest.getUsername() );
+        user.setPassword( createUserRequest.getPassword() );
         user.setEmail( createUserRequest.getEmail() );
         user.setFirstName( createUserRequest.getFirstName() );
         user.setLastName( createUserRequest.getLastName() );
-        user.setPassword( createUserRequest.getPassword() );
-        user.setUsername( createUserRequest.getUsername() );
 
         user.setActive( true );
 
@@ -66,11 +66,11 @@ public class UserMapperImpl implements UserMapper {
             return;
         }
 
-        user.setActive( userDto.isActive() );
+        user.setUsername( userDto.getUsername() );
         user.setEmail( userDto.getEmail() );
         user.setFirstName( userDto.getFirstName() );
         user.setLastName( userDto.getLastName() );
-        user.setUsername( userDto.getUsername() );
+        user.setActive( userDto.isActive() );
     }
 
     protected Set<RoleDto> roleSetToRoleDtoSet(Set<Role> set) {

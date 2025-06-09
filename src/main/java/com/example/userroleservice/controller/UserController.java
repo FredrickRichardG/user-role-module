@@ -1,5 +1,6 @@
 package com.example.userroleservice.controller;
 
+import com.example.userroleservice.annotation.ExecutionTime;
 import com.example.userroleservice.dto.CreateUserRequest;
 import com.example.userroleservice.dto.RoleDto;
 import com.example.userroleservice.dto.UserDto;
@@ -35,6 +36,7 @@ public class UserController {
         return new ResponseEntity<>(userService.createRole(request), HttpStatus.CREATED);
     }
 
+    @ExecutionTime
     @GetMapping("/{id}")
     @Operation(summary = "Get user by ID")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
